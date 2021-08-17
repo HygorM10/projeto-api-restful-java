@@ -18,31 +18,28 @@ public class ProjetoApiRestfulCursoApplication {
  		SpringApplication.run(ProjetoApiRestfulCursoApplication.class, args);
 	}
 	
-	@Autowired
-	private EmpresaService empresaService;
-	
-	@Bean
-	public CommandLineRunner commandLineRunner() {
-		return args -> {
-			Empresa empresa = new Empresa();
-			empresa.setRazaoSocial("Hygor Martins TI");
-			empresa.setCnpj("123456789");
-			
-			empresaService.salvarEmpresa(empresa);
-			
-			List<Empresa> empresas = empresaService.listarEmpresas();
-			empresas.forEach(System.out::println);
-			
-			Empresa empresaDb = empresaService.buscarEmpresa(1L);
-			System.out.println("Empres por ID: " + empresaDb);
-			
-			empresaDb.setRazaoSocial("Nova Razão Social Hygor");
-			empresaService.salvarEmpresa(empresaDb);
-			
-			empresas = empresaService.listarEmpresas();
-			empresas.forEach(System.out::println);
-			
-		};
-	}
+//	@Bean
+//	public CommandLineRunner commandLineRunner() {
+//		return args -> {
+//			Empresa empresa = new Empresa();
+//			empresa.setRazaoSocial("Hygor Martins TI");
+//			empresa.setCnpj("123456789");
+//			
+//			empresaService.salvarEmpresa(empresa);
+//			
+//			List<Empresa> empresas = empresaService.listarEmpresas();
+//			empresas.forEach(System.out::println);
+//			
+//			Empresa empresaDb = empresaService.buscarEmpresa(1L);
+//			System.out.println("Empres por ID: " + empresaDb);
+//			
+//			empresaDb.setRazaoSocial("Nova Razão Social Hygor");
+//			empresaService.salvarEmpresa(empresaDb);
+//			
+//			empresas = empresaService.listarEmpresas();
+//			empresas.forEach(System.out::println);
+//			
+//		};
+//	}
 
 }
