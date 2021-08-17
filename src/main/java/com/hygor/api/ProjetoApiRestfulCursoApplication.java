@@ -1,7 +1,6 @@
 package com.hygor.api;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -10,17 +9,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import com.hygor.api.entities.Empresa;
-import com.hygor.api.repositories.EmpresaRepository;
+import com.hygor.api.services.EmpresaService;
 
 @SpringBootApplication
 public class ProjetoApiRestfulCursoApplication {
-	
-	@Autowired
-	private EmpresaRepository empresaRepository; 
 
 	public static void main(String[] args) {
  		SpringApplication.run(ProjetoApiRestfulCursoApplication.class, args);
 	}
+	
+	@Autowired
+	private EmpresaService empresaService;
 	
 	@Bean
 	public CommandLineRunner commandLineRunner() {
@@ -29,23 +28,19 @@ public class ProjetoApiRestfulCursoApplication {
 			empresa.setRazaoSocial("Hygor Martins TI");
 			empresa.setCnpj("123456789");
 			
-			this.empresaRepository.save(empresa);
+			empresaService.salvarEmpresa(empresa);
 			
-			List<Empresa> empresas = empresaRepository.findAll();
+			List<Empresa> empresas = empresaService.listarEmpresas();
 			empresas.forEach(System.out::println);
 			
-			Optional<Empresa> empresaDb = empresaRepository.findById(1L);
+			Empresa empresaDb = empresaService.buscarEmpresa(1L);
 			System.out.println("Empres por ID: " + empresaDb);
 			
-			empresaDb.get().setRazaoSocial("Nova Razão Social Hygor");
-			this.empresaRepository.save(empresaDb.get());
+			empresaDb.setRazaoSocial("Nova Razão Social Hygor");
+			empresaService.salvarEmpresa(empresaDb);
 			
-			empresas = empresaRepository.findAll();
+			empresas = empresaService.listarEmpresas();
 			empresas.forEach(System.out::println);
-			
-			this.empresaRepository.deleteById(1L);
-			empresas = empresaRepository.findAll();
-			System.out.println("Empresas: " +  empresas.size());
 			
 		};
 	}
